@@ -1,0 +1,3 @@
+0 average
+1 bad
+2 good

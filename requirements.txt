@@ -1,0 +1,6 @@
+streamlit==0.82.0
+tensorflow==2.5.0
+Pillow==8.2.0
+pygdrive3==0.8.1
+google-api-python-client==2.8.0
+oauth2client==4.1.3
