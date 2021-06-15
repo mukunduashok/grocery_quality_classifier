@@ -1,16 +1,26 @@
 from pygdrive3 import service
 import streamlit as st
+import json
+import os
 
 
 class GDrive(object):
+    SECRETS_JSON = "client_secret.json"
     BASE_FOLDER = "__AI_IMAGE_DATA"
     ROOT_FOLDER = "My Drive"  # Usually root folder in google drive is "My Drive"
     FOLDER_MIME_TYPE = 'application/vnd.google-apps.folder'
 
     def __init__(self):
-        self.service = service.DriveService('./client_secret.json')
+        self.create_client_secrets()
+        self.service = service.DriveService(self.SECRETS_JSON)
         self.service.auth()
         self.base_id, self.root_id = self.init_info()
+
+    def create_client_secrets(self):
+        if not os.path.exists(self.SECRETS_JSON):
+            client_secrets_dict = json.loads(st.secrets['driveKey'])
+            with open(self.SECRETS_JSON, 'w+') as outfile:
+                json.dump(client_secrets_dict, outfile)
 
     @st.cache
     def init_info(self):
