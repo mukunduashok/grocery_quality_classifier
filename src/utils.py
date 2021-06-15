@@ -56,4 +56,4 @@ def upload_image(image, grocery_type, label):
     image_name = "{}_{}_{}".format(grocery_type, label, now)
     image_id = drive.upload_image(image_name, saved_file, grocery_type, label)
     os.remove(saved_file)
-    return image_id
+    return image_id, image_name

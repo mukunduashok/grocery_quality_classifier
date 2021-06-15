@@ -56,7 +56,7 @@ class GDrive(object):
         """
         folder_id = self.folder_exists(folder_name, parent_id)
         if not folder_id:
-            print("Creating folder with name - {}".format(folder_name))
+            # print("Creating folder with name - {}".format(folder_name))
             folder_id = self.service.create_folder(folder_name, parent_id)
             return folder_id
         else:
