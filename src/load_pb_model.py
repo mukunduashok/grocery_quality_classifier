@@ -3,7 +3,6 @@ import numpy as np
 import os
 import tensorflow as tf
 from PIL import Image, ImageOps
-import time
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 CHANNELS = 3

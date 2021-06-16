@@ -3,3 +3,5 @@ credentials/*
 venv/*
 .DS_Store
 __pycache__
+.streamlit/*
+.vscode/*

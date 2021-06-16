@@ -1,11 +1,17 @@
 import os
-import numpy as np
 from PIL import Image
 import streamlit as st
 import time
 
 # Project Imports
-from gdrive_api import GDrive
+# from gdrive_api import GDrive
+from mongodb_api import MongoDB
+
+
+@st.cache(allow_output_mutation=True)
+def get_db_obj():
+    db = MongoDB()
+    return db
 
 
 @st.cache
@@ -42,9 +48,45 @@ def save_to_local(img_obj, grocery_type):
     return image_name
 
 
+def save_to_db(image, grocery_type, label):
+    """
+    Saves the image object to local. Uploads the image to mongo db. 
+    Creates a mapping record in collection - images. Deletes the image from local.
+    :param image: Pillow.Image.open() object
+    :param grocery_type: apple / mango / ...
+    :param label: good / bad / average
+    :return id of the uploaded image from google drive
+    """
+    saved_file = save_to_local(image, grocery_type)
+    db = get_db_obj()
+    # now = time.time()
+    # image_name = "{}_{}".format(grocery_type, now)
+    document = {'image_path': saved_file,
+                'item_type': grocery_type, 'label': label}
+    doc_id = db.create_document(document)
+    os.remove(saved_file)
+    return doc_id
+
+
+def update_label(doc_id, new_label):
+    """
+    Provided the document ID and new label name,
+    the function will update the label name in the document
+    :param doc_id: ('bson.objectid.ObjectId') id of the document
+    ;param label: (str) "good / bad / average"
+    :return (bool) True if success. False if failed
+    """
+    db = get_db_obj()
+    return db.update_document(doc_id, {'label': new_label})
+
+
 def upload_image(image, grocery_type, label):
     """
+    Warning: The Google Drive upload functionality is not used any more. 
+    Instead please use save_to_db function to store images in mongodb
+
     Saves the image object to local. Uploads the image to google drive. Deletes the image from local
+
     :param image: Pillow.Image.open() object
     :param grocery_type: apple / mango / ...
     :param label: good / bad / average
