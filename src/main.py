@@ -56,9 +56,9 @@ if classify_image:
     label = prediction.idxmax(axis=1)[0]
     doc_id = save_to_db(img, grocery_type, label)
 
-if doc_id:
-    st.markdown('#')
-    if classify_image:
-        classification_preference = st.selectbox(
-            'Not Happy ? Update product quality', LABELS)
-        update_label(doc_id, classification_preference)
+# if doc_id:
+#     st.markdown('#')
+#     if classify_image:
+#         classification_preference = st.selectbox(
+#             'Not Happy ? Update product quality', LABELS)
+#         update_label(doc_id, classification_preference)
