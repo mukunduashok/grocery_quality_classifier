@@ -65,11 +65,7 @@ def predict(model, image, image_size):
     :param image_size: the uploaded file as such
     """
     classifier = ImageClassifier(model, image_size=image_size)
-    # start_time = time.time()
     prediction = classifier.run(image)[0]
-    # end_time = time.time()
-    # print("Time taken to predict using pb model is {} seconds".format(
-    #     end_time - start_time))
     # Convert to percentage from probability (p * 100)
     prediction = prediction * 100
     # Reshape the numpy array from array([3.00000e-04, 3.57900e-03, 9.96421e-01])

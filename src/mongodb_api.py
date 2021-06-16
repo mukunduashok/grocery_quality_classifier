@@ -61,20 +61,15 @@ class MongoDB(object):
         return update_result.acknowledged
 
     def read_image(self, query):
+        """
+        WARNING:
+        Work in Progress. Implementation is incomplete!
+        """
         img = self.fs.find_one(query)
         with open('5.jpg', 'wb') as outfile:
             outfile.write(img.read())
         return True
 
 
-
 if __name__ == '__main__':
-    api = MongoDB()
-    document = {
-        'image_path': "44.jpg",
-        'item_type': 'apple',
-        'label': "average"
-    }
-    doc_id = api.create_document(document)
-    print(doc_id)
-    print(api.update_document(doc_id, {'label': 'bad'}))
+    pass

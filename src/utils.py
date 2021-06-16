@@ -36,6 +36,7 @@ def load_image(img, inp_shape):
     return image
 
 
+@st.cache
 def save_to_local(img_obj, grocery_type):
     """
     Function to save the image to local
@@ -48,6 +49,7 @@ def save_to_local(img_obj, grocery_type):
     return image_name
 
 
+@st.cache
 def save_to_db(image, grocery_type, label):
     """
     Saves the image object to local. Uploads the image to mongo db. 
@@ -68,6 +70,7 @@ def save_to_db(image, grocery_type, label):
     return doc_id
 
 
+@st.cache(max_entries=2)
 def update_label(doc_id, new_label):
     """
     Provided the document ID and new label name,
