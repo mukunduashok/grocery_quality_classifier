@@ -44,23 +44,23 @@ uploaded_file = st.file_uploader(
     label="Choose an image", type=['jpg', 'jpeg', 'png'])
 
 if uploaded_file is not None:
-    state.image_uploaded = True    
+    state.image_uploaded = True
     img = load_image(uploaded_file, inp_shape)
     st.image(img)
     st.write("Image Uploaded successfully")
     state.classify_requested = True
 
-# Classify the image on button click / once uploaded
-if state.classify_requested:
-    prediction = predict(model, uploaded_file, inp_shape)
-    # Create the prediction as a data frame and display as table
-    prediction = pd.DataFrame(prediction)
-    st.dataframe(prediction.style.highlight_max(axis=1, color='SeaGreen'))
-    # Find the max probability from prediction and upload to google drive
-    label = prediction.idxmax(axis=1)[0]
-    doc_id = save_to_db(img, grocery_type, label)
-    if doc_id:
-        state.saved_to_db = True
+    # Classify the image on button click / once uploaded
+    if state.classify_requested:
+        prediction = predict(model, uploaded_file, inp_shape)
+        # Create the prediction as a data frame and display as table
+        prediction = pd.DataFrame(prediction)
+        st.dataframe(prediction.style.highlight_max(axis=1, color='SeaGreen'))
+        # Find the max probability from prediction and upload to google drive
+        label = prediction.idxmax(axis=1)[0]
+        doc_id = save_to_db(img, grocery_type, label)
+        if doc_id:
+            state.saved_to_db = True
 
 if state.saved_to_db:
     st.markdown('#')
