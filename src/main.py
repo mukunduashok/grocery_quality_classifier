@@ -36,6 +36,7 @@ grocery_type = st.selectbox(
     GROCERIES,
 )
 model = models.get(grocery_type)
+inp_shape = model.input_shape[1:3]
 selection = "Grocery type selected: {}".format(grocery_type)
 st.write(selection)
 
@@ -44,7 +45,6 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file is not None:
     state.image_uploaded = True    
-    inp_shape = model.input_shape[1:3]
     img = load_image(uploaded_file, inp_shape)
     st.image(img)
     st.write("Image Uploaded successfully")
